@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var patientsController = require('../controllers/patients');
-var isAuthenticated = require('../middlewares/authenticate');
-var authorizeRoles = require('../middlewares/authorize')
+var {isAuthenticated} = require('../middlewares/authenticate');
+var {authorizeRoles} = require('../middlewares/authorize')
 
 router.get('/', isAuthenticated, authorizeRoles(['doctor']), function(req, res) {
   patientsController.listPatients(req, res);

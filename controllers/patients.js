@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Patient = require('../models/patients');
 
-export const createPatient = async(req, res) =>{
+const createPatient = async(req, res) =>{
     try {
         const { fName, lName, dob, gender, mobile, email, password, role } = req.body;
     
@@ -30,7 +30,7 @@ export const createPatient = async(req, res) =>{
       }
 };
 
-export const loginPatient = async(req, res) =>{
+const loginPatient = async(req, res) =>{
     const { email, password } = req.body;
 
     if (!email || !password) {
@@ -59,7 +59,7 @@ export const loginPatient = async(req, res) =>{
     });
 }
 
-export const listPatients = async (req, res) =>{
+const listPatients = async (req, res) =>{
     try {
         const patients = await Patient.find();
         res.status(200).json(patients);
@@ -68,7 +68,7 @@ export const listPatients = async (req, res) =>{
     }
 }
 
-export const getPatientById = async (req, res) =>{
+const getPatientById = async (req, res) =>{
     try {
         const patient = await Patient.findById(req.params.id);
         if (!patient) {
@@ -80,7 +80,7 @@ export const getPatientById = async (req, res) =>{
     }
 }
 
-export const updatePatient = async (req, res) =>{
+const updatePatient = async (req, res) =>{
     try {
         const { fName, lName, dob, gender, mobile, email, role } = req.body;
         
@@ -108,4 +108,6 @@ export const updatePatient = async (req, res) =>{
         res.status(500).json({ message: 'Error updating patient', error });
     }
 }
+
+module.exports = { createPatient, loginPatient, listPatients, getPatientById, updatePatient}
 

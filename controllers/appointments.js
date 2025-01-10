@@ -1,7 +1,7 @@
 
 const Appointment = require('../models/appointments');
 
-export const createAppointment = async(req, res) =>{
+const createAppointment = async(req, res) =>{
     try {
         const { doctor, reason, time, additionalNotes } = req.body;
     
@@ -19,7 +19,7 @@ export const createAppointment = async(req, res) =>{
       }
 };
 
-export const listAppointments = async (req, res) =>{
+const listAppointments = async (req, res) =>{
     try {
         const appointments = await Appointment.find();
         res.status(200).json(appointments);
@@ -27,3 +27,5 @@ export const listAppointments = async (req, res) =>{
         res.status(500).json({ message: 'Error fetching appointments', error });
     }
 }
+
+module.exports = { createAppointment, listAppointments };

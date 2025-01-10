@@ -22,8 +22,6 @@ var indexRouter = require('./routes/index');
 var patientsRouter = require('./routes/patients');
 var doctorsRouter = require('./routes/doctors');
 var appointmentRouter = require('./routes/appointments');
-var logsRouter = require('./routes/logs');
-var rolesRouter = require('./routes/roles');
 
 var app = express();
 
@@ -41,8 +39,6 @@ app.use('/', indexRouter);
 app.use('/patients', patientsRouter);
 app.use('/doctors', doctorsRouter);
 app.use('/appointments', appointmentRouter);
-app.use('/logs', logsRouter);
-app.use('/roles', rolesRouter);
 app.use(helmet());
 app.use(limiter);
 

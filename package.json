@@ -2,10 +2,12 @@
   "name": "hackathonapp",
   "version": "0.0.0",
   "private": true,
+  "type": "commonjs",
   "scripts": {
     "start": "node ./bin/www"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "cookie-parser": "~1.4.4",
     "csurf": "^1.10.0",
     "debug": "~2.6.9",
@@ -15,6 +17,7 @@
     "helmet": "^8.0.0",
     "http-errors": "~1.6.3",
     "jade": "~1.11.0",
+    "jsonwebtoken": "^9.0.2",
     "mongoose": "^8.9.4",
     "morgan": "~1.9.1"
   }

@@ -1,1 +1,2 @@
-export const ALLOWED_ROLES = ["patient", "doctor"];
+const ALLOWED_ROLES = ["patient", "doctor"];
+module.exports = { ALLOWED_ROLES }
