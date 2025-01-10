@@ -3,6 +3,20 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const helmet = require('helmet');
+const csrf = require('csurf');
+const csrfProtection = csrf({ cookie: true });
+const rateLimit = require('express-rate-limit');
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
+  legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+  message: {
+    status: 429,
+    message: 'Too many requests, please try again later.',
+  },
+});
 
 var indexRouter = require('./routes/index');
 var patientsRouter = require('./routes/patients');
@@ -29,6 +43,8 @@ app.use('/doctors', doctorsRouter);
 app.use('/appointments', appointmentRouter);
 app.use('/logs', logsRouter);
 app.use('/roles', rolesRouter);
+app.use(helmet());
+app.use(limiter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

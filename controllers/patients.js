@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+const bcrypt = require('bcryptjs');
 const Patient = require('../models/patients');
 
 export const createPatient = async(req, res) =>{
@@ -27,6 +29,35 @@ export const createPatient = async(req, res) =>{
         next(err);
       }
 };
+
+export const loginPatient = async(req, res) =>{
+    const { email, password } = req.body;
+
+    if (!email || !password) {
+      return res.status(400).json({ message: 'email and password are required' });
+    }
+  
+    const patient = Patient.find((u) => u.email === email);
+    if (!patient) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    const isPasswordValid = bcrypt.compareSync(password, patient.password);
+    if (!isPasswordValid) {
+      return res.status(401).json({ message: 'Invalid email or password' });
+    }
+  
+    const token = jwt.sign(
+      { userId: patient.id, role: patient.role },
+      SECRET_KEY,
+      { expiresIn: '1h' } // Token valid for 1 hour
+    );
+  
+    res.status(200).json({
+      message: 'Login successful',
+      accessToken: token
+    });
+}
 
 export const listPatients = async (req, res) =>{
     try {
